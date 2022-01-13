@@ -1,5 +1,4 @@
 from tkinter import *
-## COMMENTS OF THIS PAGE
 windows = Tk()
 app_width = 760
 app_height = 400
