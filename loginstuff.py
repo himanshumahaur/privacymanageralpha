@@ -42,13 +42,19 @@ def verify():
 
 
 def savenew():
-    username = str(input("Enter Username: "))
-    password = str(input("Enter Password: "))
-  
-    encripass = hashlib.sha256(password.encode()).hexdigest()
 
-    newdata = pd.DataFrame({'u':[username], 'p':[encripass]})
-    newdata.to_csv('D:/.GitHub/privacymanageralpha/loginstuff.csv', mode='a', index=False, header=False)
+    username = str(input("Enter Username: "))
+
+    if userexists(username):
+        print("User already there!")
+    
+    else:
+        password = str(input("Enter Password: "))
+  
+        encripass = hashlib.sha256(password.encode()).hexdigest()
+
+        newdata = pd.DataFrame({'u':[username], 'p':[encripass]})
+        newdata.to_csv('D:/.GitHub/privacymanageralpha/loginstuff.csv', mode='a', index=False, header=False)
 
 def choice():
 
