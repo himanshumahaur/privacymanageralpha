@@ -47,6 +47,7 @@ def verify():
 def savenew():
 
     username = str(input("Enter Username: "))
+    
 
     if userexists(username):
         print("User already there! Try log in")
@@ -55,8 +56,25 @@ def savenew():
         password = str(input("Enter Password: "))
         encripass = hashlib.sha256(password.encode()).hexdigest()
 
-        newdata = pd.DataFrame({'u':[username], 'p':[encripass]})
-        newdata.to_csv('D:/.GitHub/privacymanageralpha/loginstuff.csv', mode='a', index=False, header=False)
+
+        mailcode = getmailcode()
+        message = 'Your code is ' + mailcode
+
+        s = smtplib.SMTP('smtp.gmail.com', 587)
+        s.starttls()
+        s.login("pythonproject.github@gmail.com", "rohithimanshu")
+        s.sendmail("pythonproject.github@gmail.com", username, message)
+        s.quit()
+
+        usercode = str(input("Enter Code from email: "))
+
+        if usercode == mailcode:
+            newdata = pd.DataFrame({'u':[username], 'p':[encripass]})
+            newdata.to_csv('D:/.GitHub/privacymanageralpha/loginstuff.csv', mode='a', index=False, header=False)
+            
+        else:
+            print("WRONG CODE")
+
 
 def getindex(username):
     userlist = getuserlist()
